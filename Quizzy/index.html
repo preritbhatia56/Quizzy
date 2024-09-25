@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quizzy</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+          }
+          .options button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 200px;
+            cursor: pointer;
+          }
+        </style>
+      </head>
+      <body>
+      
+        <h1>Quizzy</h1>
+      
+        <div>
+          <p id="question">Question</p>
+          <div class="options">
+            <button id="op1"></button>
+            <button id="op2"></button>
+            <button id="op3"></button>
+            <button id="op4"></button>
+          </div>
+          <p id="score"></p>
+        </div>
+      
+        <script>
+          
+          const quizQuestions = [
+            {
+              question: "Who was the first Prime Minister of India?",
+              options: ["Mahatma Gandhi", "Jawaharlal Nehru", "Sardar Patel", "Subhas Chandra Bose"],
+              answer: "Jawaharlal Nehru"
+            },
+            {
+              question: "In which year did India gain independence?",
+              options: ["1945", "1946", "1947", "1948"],
+              answer: "1947"
+            },
+            {
+              question: "Which Indian state is known as the 'Land of Rising Sun'?",
+              options: ["Arunachal Pradesh", "Assam", "Sikkim", "Nagaland"],
+              answer: "Arunachal Pradesh"
+            },
+            {
+              question: "Who is known as the 'Missile Man of India'?",
+              options: ["Homi J. Bhabha", "Vikram Sarabhai", "APJ Abdul Kalam", "Satish Dhawan"],
+              answer: "APJ Abdul Kalam"
+            },
+            {
+              question: "What is the national flower of India?",
+              options: ["Rose", "Lily", "Lotus", "Marigold"],
+              answer: "Lotus"
+            }
+          ];
+      
+          let currentQuestionIndex = 0;
+          let score = 0;
+      
+        
+          const questionEl = document.getElementById('question');
+          const optionButtons = [
+            document.getElementById('op1'),
+            document.getElementById('op2'),
+            document.getElementById('op3'),
+            document.getElementById('op4')
+          ];
+          const scoreEl = document.getElementById('score');
+      
+          
+          function loadQuestion() {
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            questionEl.innerText = currentQuestion.question;
+            optionButtons.forEach((button, index) => {
+              button.innerText = currentQuestion.options[index];
+              button.onclick = () => checkAnswer(button.innerText);
+            });
+          }
+      
+          
+          function checkAnswer(selectedAnswer) {
+            const correctAnswer = quizQuestions[currentQuestionIndex].answer;
+            if (selectedAnswer === correctAnswer) {
+              score++;
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+              loadQuestion();
+            } else {
+              showScore(); 
+            }
+          }
+      
+          
+          function showScore() {
+            questionEl.innerText = `Quiz Over! Your Score: ${score}/${quizQuestions.length}`;
+            optionButtons.forEach(button => button.style.display = 'none'); 
+            scoreEl.innerText = ''; 
+          }
+      
+          
+          loadQuestion();
+        </script>
+      
+      </body>
+      </html>
